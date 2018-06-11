@@ -1,0 +1,26 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="FEG LLC company automatic tests for UI" verbose="1" >
+   <!-- <listeners>
+        <listener class-name="org.uncommons.reportng.HTMLReporter" />
+        <listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+    </listeners>
+    -->
+ <!--   <parameter name="browsDefault"  value="chrome"/>-->
+
+    <test name="Successfully Logged In User with correct Email/Password [Chrome]" >
+        <parameter name="browsDefault"  value="chrome"/>
+        <classes>
+            <class name="myprojects.automation.assignment4.tests.login_page.SuccessfullyLogIn" />
+        </classes>
+    </test>
+
+    <test name="Unsuccessfully Logged In user [Chrome]" >
+        <parameter name="browsDefault"  value="chrome"/>
+        <classes>
+            <class name="myprojects.automation.assignment4.tests.login_page.UnsuccessfullyLogInIncorrectPwd" />
+            <class name="myprojects.automation.assignment4.tests.login_page.UnsuccessfullyLogInEmptyFields" />
+        </classes>
+    </test>
+
+</suite>
