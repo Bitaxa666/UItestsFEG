@@ -14,7 +14,7 @@
             <class name="myprojects.automation.assignment4.tests.login_page.SuccessfullyLogIn" />
         </classes>
     </test>
-
+<!--
     <test name="Unsuccessfully Logged In user [Chrome]" >
         <parameter name="browsDefault"  value="chrome"/>
         <classes>
@@ -28,5 +28,5 @@
             <class name="myprojects.automation.assignment4.tests.login_page.SuccessfullyLogout" />
         </classes>
     </test>
-
+-->
 </suite>

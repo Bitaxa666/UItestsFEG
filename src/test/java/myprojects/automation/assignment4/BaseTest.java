@@ -1,10 +1,13 @@
 package myprojects.automation.assignment4;
 
-import myprojects.automation.assignment4.utils.logging.EventHandler;
+import java.net.MalformedURLException;
+import java.net.URL;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -19,7 +22,8 @@ import java.util.concurrent.TimeUnit;
  * Base script functionality, can be used for all Selenium scripts.
  */
 public abstract class BaseTest {
-    protected EventFiringWebDriver driver;
+    /*protected EventFiringWebDriver driver;*/
+    protected RemoteWebDriver driver;
     protected GeneralActions actions;
 
     /**
@@ -44,9 +48,14 @@ public abstract class BaseTest {
                 return new InternetExplorerDriver();
             case "chrome":
             default:
+                String driverPath = System.getProperty("user.dir") + "/src/test/resources/chromedriver";
                 System.setProperty(
+                        /*"webdriver.chrome.driver",
+                        getResource("/chromedriver"));*/
+
+                        //use work java directory, not resources directory.....
                         "webdriver.chrome.driver",
-                        getResource("/chromedriver"));
+                        driverPath);
                 return new ChromeDriver();
         }
     }
@@ -74,9 +83,16 @@ public abstract class BaseTest {
     @Parameters({ "browsDefault" })
     @BeforeClass
     // TODO use parameters from pom.xml to pass required browser type
-    public void setUp(@Optional("chrome")String browser) {
-        driver = new EventFiringWebDriver(getDriver(browser));
-        driver.register(new EventHandler());
+    public void setUp(@Optional("chrome")String browser)  throws MalformedURLException {
+        /*driver = new EventFiringWebDriver(getDriver(browser));
+        driver.register(new EventHandler());*/
+
+        DesiredCapabilities dc = DesiredCapabilities.chrome();
+
+        // You should check the Port No here.
+        URL gamelan = new URL("http://localhost:32771/wd/hub");
+
+        driver = new RemoteWebDriver(gamelan, dc);
 
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(30, TimeUnit.SECONDS);
